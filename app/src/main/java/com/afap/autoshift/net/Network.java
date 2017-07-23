@@ -8,8 +8,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Network {
     private static YunbiAPIService yunbiApis;
+    private static ShapeShiftAPIService shapeShiftApis;
 
-    public static YunbiAPIService getAPIService() {
+    public static YunbiAPIService getYunbiAPIService() {
         if (yunbiApis == null) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -29,6 +30,28 @@ public class Network {
             yunbiApis = retrofit.create(YunbiAPIService.class);
         }
         return yunbiApis;
+    }
+
+    public static ShapeShiftAPIService getShapeShiftAPIService() {
+        if (shapeShiftApis == null) {
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            // OkHttp3.0的使用方式
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .retryOnConnectionFailure(true)
+                    .addInterceptor(loggingInterceptor) // TODO 最后关闭日志
+                    .build();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://shapeshift.io/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .client(okHttpClient)
+                    .build();
+            shapeShiftApis = retrofit.create(ShapeShiftAPIService.class);
+        }
+        return shapeShiftApis;
     }
 
 

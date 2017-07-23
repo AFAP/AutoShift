@@ -16,12 +16,27 @@ public interface YunbiAPIService {
 //https://yunbi.com/api/v2/order_book.json?market=sccny
 
 
+
+
+    /**
+     * 获取指定市场的买卖深度
+     *
+     * @param market     数字货币类型
+     * @param limit 深度
+     */
+    @GET("api/v2/depth.json")
+    Observable<JsonObject> getDepth(@Query("market") String market, @Query("limit") int limit );
+
     /**
      * 获取指定市场的订单
+     *
+     * @param market     数字货币类型
+     * @param asks_limit 卖单数量
+     * @param bids_limit 买单数量
      */
     @GET("api/v2/order_book.json")
-    Observable<JsonObject> getOrderBook(@Query("market") String market);
-
+    Observable<JsonObject> getOrderBook(@Query("market") String market, @Query("asks_limit") int asks_limit,
+                                        @Query("bids_limit") int bids_limit);
 
     /**
      * 注册百度推送

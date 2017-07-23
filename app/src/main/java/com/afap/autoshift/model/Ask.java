@@ -133,7 +133,7 @@ public class Ask {
     }
 
 
-    public static Ask parseFromJson(JsonObject json ){
+    public static Ask parseFromJson(JsonObject json) {
         Ask ask = new Ask();
 
 

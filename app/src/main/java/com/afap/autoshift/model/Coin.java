@@ -12,6 +12,7 @@ public class Coin {
         this.resId = resId;
     }
 
+
     public String getId() {
         return id;
     }
