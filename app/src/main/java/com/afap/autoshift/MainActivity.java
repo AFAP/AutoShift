@@ -249,10 +249,10 @@ public class MainActivity extends AppCompatActivity {
                         info_eth_sell_earn.setText(String.format(getString(R.string.earn_average), df.format
                                 (avage_b_eth)));
 
-                        String overview = String.format("买入A花费%f,卖出B得到%f,获利：%f", total_pay_sc, total_earn_eth,
+                        String overview = String.format("买入A花费%f,卖出B得到%f,扣除佣金,获利：%f", total_pay_sc, total_earn_eth,
                                 (total_earn_eth -
-                                        total_pay_sc));
-                        sc_eth_overview.setText("++" + overview);
+                                        total_pay_sc-0.001*(total_earn_eth+total_pay_sc)));
+                        sc_eth_overview.setText(  overview);
 
                     }
                 });
@@ -379,10 +379,10 @@ public class MainActivity extends AppCompatActivity {
                         info_sc_sell_earn.setText(String.format(getString(R.string.earn_average), df.format
                                 (avage_b_sc)));
 
-                        String overview = String.format("买入A花费%f,卖出B得到%f,获利：%f", total_pay_eth, total_earn_sc,
+                        String overview = String.format("买入A花费%f,卖出B得到%f,扣除佣金,获利：%f", total_pay_eth, total_earn_sc,
                                 (total_earn_sc -
-                                        total_pay_eth));
-                        eth_sc_overview.setText("++" + overview);
+                                        total_pay_eth-0.001*(total_earn_sc+total_pay_eth)));
+                        eth_sc_overview.setText(overview);
 
                     }
                 });
