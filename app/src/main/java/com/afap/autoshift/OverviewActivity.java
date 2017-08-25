@@ -24,6 +24,7 @@ import com.afap.autoshift.model.ShiftInfo;
 import com.afap.autoshift.net.BaseSubscriber;
 import com.afap.autoshift.net.Network;
 import com.afap.autoshift.utils.LogUtil;
+import com.afap.utils.ContextUtil;
 import com.afap.utils.ToastUtil;
 import com.google.gson.JsonObject;
 
@@ -82,13 +83,24 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     private void initData() {
+
+//        ContextUtil.getStringFromAsset()
+
         pairs = new ArrayList<>();
         pairs.add(new PairInfo("SC", R.mipmap.coin_sc, "sccny", 120000, "ETH", R.mipmap.coin_eth, "ethcny", 0, "SC_ETH"));
-        pairs.add(new PairInfo("ETH", R.mipmap.coin_eth, "ethcny", 3.0, "SC", R.mipmap.coin_sc, "sccny", 0, "ETH_SC"));
+        pairs.add(new PairInfo("ETH", R.mipmap.coin_eth, "ethcny", 2.5, "SC", R.mipmap.coin_sc, "sccny", 0, "ETH_SC"));
         pairs.add(new PairInfo("SC", R.mipmap.coin_sc, "sccny", 120000, "ZEC", R.mipmap.coin_zec, "zeccny", 0, "SC_ZEC"));
         pairs.add(new PairInfo("ZEC", R.mipmap.coin_zec, "zeccny", 3.0, "SC", R.mipmap.coin_sc, "sccny", 0, "ZEC_SC"));
-        pairs.add(new PairInfo("ZEC", R.mipmap.coin_zec, "zeccny", 3, "ETH", R.mipmap.coin_eth, "ethcny", 0, "ZEC_ETH"));
-        pairs.add(new PairInfo("ETH", R.mipmap.coin_eth, "ethcny", 3.0, "ZEC", R.mipmap.coin_zec, "zeccny", 0, "ETH_ZEC"));
+        pairs.add(new PairInfo("ZEC", R.mipmap.coin_zec, "zeccny", 3.0, "ETH", R.mipmap.coin_eth, "ethcny", 0, "ZEC_ETH"));
+        pairs.add(new PairInfo("ETH", R.mipmap.coin_eth, "ethcny", 2.5, "ZEC", R.mipmap.coin_zec, "zeccny", 0, "ETH_ZEC"));
+
+        pairs.add(new PairInfo("ETH", R.mipmap.coin_eth, "ethcny", 2.5, "DGD", R.mipmap.coin_dgd, "dgdcny", 0, "ETH_DGD"));
+        pairs.add(new PairInfo("DGD", R.mipmap.coin_dgd, "dgdcny", 6.0, "ZEC", R.mipmap.coin_eth, "ethcny", 0, "DGD_ETH"));
+        pairs.add(new PairInfo("SC", R.mipmap.coin_sc, "sccny", 100000, "DGD", R.mipmap.coin_dgd, "dgdcny", 0, "SC_DGD"));
+        pairs.add(new PairInfo("DGD", R.mipmap.coin_dgd, "dgdcny", 6.0, "SC", R.mipmap.coin_sc, "sccny", 0, "DGD_SC"));
+        pairs.add(new PairInfo("DGD", R.mipmap.coin_dgd, "dgdcny", 6.0, "ZEC", R.mipmap.coin_zec, "zeccny", 0, "DGD_ZEC"));
+        pairs.add(new PairInfo("ZEC", R.mipmap.coin_zec, "zeccny", 2.5, "DGD", R.mipmap.coin_dgd, "dgdcny", 0, "ZEC_DGD"));
+
 
 
     }
