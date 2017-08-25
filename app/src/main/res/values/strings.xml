@@ -2,6 +2,8 @@
     <string name="app_name">AutoShift</string>
 
 
+    <string name="cancel">取消</string>
+
     <string name="cost_average">平均成本:%S</string>
     <string name="earn_average">平均收益:%S</string>
 </resources>

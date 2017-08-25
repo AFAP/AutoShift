@@ -4,6 +4,7 @@
     tools:context=".activity.MainActivity">
     <item
         android:id="@+id/action_refresh"
+        android:icon="@mipmap/ic_action_refresh"
         android:title="刷新"
         app:showAsAction="always" />
 </menu>
