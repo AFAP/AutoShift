@@ -3,14 +3,15 @@ package com.afap.autoshift;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.afap.autoshift.adapter.SimpleShiftViewAdapter;
@@ -21,7 +22,6 @@ import com.afap.autoshift.model.ShiftInfo;
 import com.afap.autoshift.net.BaseSubscriber;
 import com.afap.autoshift.net.Network;
 import com.afap.autoshift.utils.LogUtil;
-import com.afap.utils.ToastUtil;
 import com.google.gson.JsonObject;
 
 import java.text.DecimalFormat;
@@ -42,6 +42,7 @@ public class ListActivity extends AppCompatActivity {
     private DecimalFormat df_net = new DecimalFormat("#.##%");
 
     private OnListInteractionListener mListener;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private SimpleShiftViewAdapter mAdapter;
 
@@ -58,8 +59,6 @@ public class ListActivity extends AppCompatActivity {
 
 
         loadAll();
-
-
     }
 
     @Override
@@ -83,19 +82,31 @@ public class ListActivity extends AppCompatActivity {
     private void initData() {
 
         mValues = new ArrayList<>();
-        mValues.add(new PairInfo("SC", R.mipmap.coin_sc, "sccny", 120000, "ETH", R.mipmap.coin_eth, "ethcny", 0, "SC_ETH"));
-        mValues.add(new PairInfo("ETH", R.mipmap.coin_eth, "ethcny", 2.5, "SC", R.mipmap.coin_sc, "sccny", 0, "ETH_SC"));
-        mValues.add(new PairInfo("SC", R.mipmap.coin_sc, "sccny", 120000, "ZEC", R.mipmap.coin_zec, "zeccny", 0, "SC_ZEC"));
-        mValues.add(new PairInfo("ZEC", R.mipmap.coin_zec, "zeccny", 3.0, "SC", R.mipmap.coin_sc, "sccny", 0, "ZEC_SC"));
-        mValues.add(new PairInfo("ZEC", R.mipmap.coin_zec, "zeccny", 3.0, "ETH", R.mipmap.coin_eth, "ethcny", 0, "ZEC_ETH"));
-        mValues.add(new PairInfo("ETH", R.mipmap.coin_eth, "ethcny", 2.5, "ZEC", R.mipmap.coin_zec, "zeccny", 0, "ETH_ZEC"));
+        mValues.add(new PairInfo("SC", R.mipmap.coin_sc, "sccny", 120000, "ETH", R.mipmap.coin_eth, "ethcny", 0,
+                "SC_ETH"));
+        mValues.add(new PairInfo("ETH", R.mipmap.coin_eth, "ethcny", 2.5, "SC", R.mipmap.coin_sc, "sccny", 0,
+                "ETH_SC"));
+        mValues.add(new PairInfo("SC", R.mipmap.coin_sc, "sccny", 120000, "ZEC", R.mipmap.coin_zec, "zeccny", 0,
+                "SC_ZEC"));
+        mValues.add(new PairInfo("ZEC", R.mipmap.coin_zec, "zeccny", 2.0, "SC", R.mipmap.coin_sc, "sccny", 0,
+                "ZEC_SC"));
+        mValues.add(new PairInfo("ZEC", R.mipmap.coin_zec, "zeccny", 2.0, "ETH", R.mipmap.coin_eth, "ethcny", 0,
+                "ZEC_ETH"));
+        mValues.add(new PairInfo("ETH", R.mipmap.coin_eth, "ethcny", 2.5, "ZEC", R.mipmap.coin_zec, "zeccny", 0,
+                "ETH_ZEC"));
 
-        mValues.add(new PairInfo("ETH", R.mipmap.coin_eth, "ethcny", 2.5, "DGD", R.mipmap.coin_dgd, "dgdcny", 0, "ETH_DGD"));
-        mValues.add(new PairInfo("DGD", R.mipmap.coin_dgd, "dgdcny", 6.0, "ZEC", R.mipmap.coin_eth, "ethcny", 0, "DGD_ETH"));
-        mValues.add(new PairInfo("SC", R.mipmap.coin_sc, "sccny", 100000, "DGD", R.mipmap.coin_dgd, "dgdcny", 0, "SC_DGD"));
-        mValues.add(new PairInfo("DGD", R.mipmap.coin_dgd, "dgdcny", 6.0, "SC", R.mipmap.coin_sc, "sccny", 0, "DGD_SC"));
-        mValues.add(new PairInfo("DGD", R.mipmap.coin_dgd, "dgdcny", 6.0, "ZEC", R.mipmap.coin_zec, "zeccny", 0, "DGD_ZEC"));
-        mValues.add(new PairInfo("ZEC", R.mipmap.coin_zec, "zeccny", 2.5, "DGD", R.mipmap.coin_dgd, "dgdcny", 0, "ZEC_DGD"));
+        mValues.add(new PairInfo("ETH", R.mipmap.coin_eth, "ethcny", 2.5, "DGD", R.mipmap.coin_dgd, "dgdcny", 0,
+                "ETH_DGD"));
+        mValues.add(new PairInfo("DGD", R.mipmap.coin_dgd, "dgdcny", 6.0, "ZEC", R.mipmap.coin_eth, "ethcny", 0,
+                "DGD_ETH"));
+        mValues.add(new PairInfo("SC", R.mipmap.coin_sc, "sccny", 100000, "DGD", R.mipmap.coin_dgd, "dgdcny", 0,
+                "SC_DGD"));
+        mValues.add(new PairInfo("DGD", R.mipmap.coin_dgd, "dgdcny", 6.0, "SC", R.mipmap.coin_sc, "sccny", 0,
+                "DGD_SC"));
+        mValues.add(new PairInfo("DGD", R.mipmap.coin_dgd, "dgdcny", 6.0, "ZEC", R.mipmap.coin_zec, "zeccny", 0,
+                "DGD_ZEC"));
+        mValues.add(new PairInfo("ZEC", R.mipmap.coin_zec, "zeccny", 2.0, "DGD", R.mipmap.coin_dgd, "dgdcny", 0,
+                "ZEC_DGD"));
 
 
     }
@@ -109,32 +120,18 @@ public class ListActivity extends AppCompatActivity {
                 }
             }
         };
-
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadAll();
+            }
+        });
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new SimpleShiftViewAdapter(mValues, mListener, this);
         mRecyclerView.setAdapter(mAdapter);
-
-        for (int i = 0; i < mValues.size(); i++) {
-            PairInfo pair = mValues.get(i);
-
-            View v = View.inflate(this, R.layout.atom_shift, null);
-
-            EditText et_amount_a = (EditText) v.findViewById(R.id.amount_a);
-            EditText et_amount_b = (EditText) v.findViewById(R.id.amount_b);
-
-            TextView text_a = (TextView) v.findViewById(R.id.text_a);
-            TextView text_b = (TextView) v.findViewById(R.id.text_b);
-
-//            TextView info_a_sell = (TextView) v.findViewById(R.id.info_a_sell);
-//            TextView info_a_buy_cost = (TextView) v.findViewById(R.id.info_a_buy_cost);
-//            TextView info_b_buy = (TextView) v.findViewById(R.id.info_b_buy);
-//            TextView info_b_sell_earn = (TextView) v.findViewById(R.id.info_b_sell_earn);
-//            TextView rate_a_b = (TextView) v.findViewById(R.id.rate_a_b);
-//            TextView a_b_overview = (TextView) v.findViewById(R.id.a_b_overview);
-
-
-        }
     }
 
 
@@ -201,7 +198,6 @@ public class ListActivity extends AppCompatActivity {
         double avage_a = total_pay_a / pairInfo.getAmount_a();
 
 
-
         info_a_sell.setText(sb_A.toString());
         info_a_buy_cost.setText(String.format(getString(R.string.cost_average), df.format(avage_a)));
 
@@ -239,7 +235,6 @@ public class ListActivity extends AppCompatActivity {
         double avage_b = total_earn_b / pairInfo.getAmount_b();
 
 
-
         info_b_buy.setText(sb.toString());
         info_b_sell_earn.setText(String.format(getString(R.string.earn_average), df.format(avage_b)));
 
@@ -258,7 +253,7 @@ public class ListActivity extends AppCompatActivity {
         for (int i = 0; i < mValues.size(); i++) {
             getMarketInfo_A_B(i);
         }
-
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private void getMarketInfo_A_B(final int position) {
@@ -279,11 +274,6 @@ public class ListActivity extends AppCompatActivity {
 
                         ShiftInfo shiftInfo = ShiftInfo.parseFromJson(jsonObject);
                         pair.setShiftInfo(shiftInfo);
-
-
-                        if (shiftInfo.getLimit() < amount_a) {
-                            ToastUtil.showShort("待转换数量超出限制");
-                        }
 
                         double amount_b = shiftInfo.getRate() * amount_a - shiftInfo.getMinerFee();
                         pair.setAmount_b(amount_b);
@@ -338,7 +328,8 @@ public class ListActivity extends AppCompatActivity {
                 });
     }
 
-    private void getBDepth_B(final PairInfo pair, final double amount_a, final double amount_b, final double total_pay_a) {
+    private void getBDepth_B(final PairInfo pair, final double amount_a, final double amount_b, final double
+            total_pay_a) {
         Network
                 .getYunbiAPIService()
                 .getDepth(pair.getYunbi_b(), LIMIT_SIZE)
