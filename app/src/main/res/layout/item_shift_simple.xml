@@ -3,99 +3,112 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:paddingBottom="12dp"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:paddingTop="12dp">
+    android:orientation="vertical">
 
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:paddingBottom="12dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="12dp">
+
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical">
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/amount_a"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:drawableLeft="@mipmap/coin_sc"
-                android:inputType="numberDecimal"
-                android:singleLine="true"
-                android:text="0.00000"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/amount_a"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawableLeft="@mipmap/coin_sc"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:text="0.00000"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/info_a_buy_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="2"
+                    android:text="平均成本:0.000\n买入总价:0.000"
+                    android:textColor="#CCFFFFFF"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
 
             <TextView
-                android:id="@+id/info_a_buy_cost"
+                android:id="@+id/rate_a_b"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lines="2"
-                android:text="平均成本:0.000\n买入总价:0.000"
-                android:textColor="#CCFFFFFF"
-                android:textSize="12sp" />
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:drawableLeft="@mipmap/ic_arrow_down"
+                android:textColor="#AAFFFFFF"
+                android:textSize="11sp"
+                tools:text="当前比率：" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/amount_b"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawableLeft="@mipmap/coin_eth"
+                    android:editable="false"
+                    android:text="0.00000"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/info_b_sell_earn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="平均收益:0.000\n卖出总价:0.000"
+                    android:textColor="#CCFFFFFF"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
         </LinearLayout>
 
 
         <TextView
-            android:id="@+id/rate_a_b"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_net"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="4dp"
-            android:drawableLeft="@mipmap/ic_arrow_down"
-            android:textColor="#AAFFFFFF"
-            android:textSize="11sp"
-            tools:text="当前比率：" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
-            <EditText
-                android:id="@+id/amount_b"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:drawableLeft="@mipmap/coin_eth"
-                android:editable="false"
-                android:text="0.00000"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/info_b_sell_earn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="平均收益:0.000\n卖出总价:0.000"
-                android:textColor="#CCFFFFFF"
-                android:textSize="12sp" />
-        </LinearLayout>
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/bg_label_green"
+            android:gravity="center"
+            android:text="+ 0.00%"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/tv_net"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:background="@drawable/bg_label_green"
-        android:gravity="center"
-        android:text="+ 0.00%"
-        android:textColor="@color/white" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#CCCCCC" />
 
 </LinearLayout>
