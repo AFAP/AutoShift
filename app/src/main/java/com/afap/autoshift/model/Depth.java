@@ -31,27 +31,27 @@ public class Depth {
         this.bids = bids;
     }
 
-    public static Depth parseFromJson(JsonObject json) {
+    public static Depth parseFromJson(JsonArray array) {
+
+
         Depth depth = new Depth();
         List<DepthOrder> asks = new ArrayList<>();
-        JsonArray askArr = json.getAsJsonArray("asks");
 
-        for (int i = 0; i < askArr.size(); i++) {
-            JsonArray arr = askArr.get(i).getAsJsonArray();
+        for (int i = 0; i < 25; i++) {
+            JsonArray arr = array.get(i).getAsJsonArray();
             double price = arr.get(0).getAsDouble();
-            double amount = arr.get(1).getAsDouble();
+            double amount = arr.get(2).getAsDouble();
 
             DepthOrder order = new DepthOrder(price, amount);
             asks.add(order);
         }
 
         List<DepthOrder> bids = new ArrayList<>();
-        JsonArray bidArr = json.getAsJsonArray("bids");
 
-        for (int i = 0; i < bidArr.size(); i++) {
-            JsonArray arr = bidArr.get(i).getAsJsonArray();
+        for (int i = 25; i < 50; i++) {
+            JsonArray arr = array.get(i).getAsJsonArray();
             double price = arr.get(0).getAsDouble();
-            double amount = arr.get(1).getAsDouble();
+            double amount = Math.abs(arr.get(2).getAsDouble()) ;
 
             DepthOrder order = new DepthOrder(price, amount);
             bids.add(order);

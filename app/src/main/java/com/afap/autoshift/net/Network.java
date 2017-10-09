@@ -7,10 +7,10 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Network {
-    private static YunbiAPIService yunbiApis;
+    private static MAPIService yunbiApis;
     private static ShapeShiftAPIService shapeShiftApis;
 
-    public static YunbiAPIService getYunbiAPIService() {
+    public static MAPIService getYunbiAPIService() {
         if (yunbiApis == null) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -22,12 +22,12 @@ public class Network {
                     .build();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://yunbi.com/")
+                    .baseUrl("https://api.bitfinex.com/v2/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .client(okHttpClient)
                     .build();
-            yunbiApis = retrofit.create(YunbiAPIService.class);
+            yunbiApis = retrofit.create(MAPIService.class);
         }
         return yunbiApis;
     }

@@ -22,6 +22,7 @@ import com.afap.autoshift.model.ShiftInfo;
 import com.afap.autoshift.net.BaseSubscriber;
 import com.afap.autoshift.net.Network;
 import com.afap.autoshift.utils.LogUtil;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.text.DecimalFormat;
@@ -82,32 +83,18 @@ public class ListActivity extends AppCompatActivity {
     private void initData() {
 
         mValues = new ArrayList<>();
-        mValues.add(new PairInfo("SC", R.mipmap.coin_sc, "sccny", 120000, "ETH", R.mipmap.coin_eth, "ethcny", 0,
-                "SC_ETH"));
-        mValues.add(new PairInfo("ETH", R.mipmap.coin_eth, "ethcny", 2.5, "SC", R.mipmap.coin_sc, "sccny", 0,
-                "ETH_SC"));
-        mValues.add(new PairInfo("SC", R.mipmap.coin_sc, "sccny", 120000, "ZEC", R.mipmap.coin_zec, "zeccny", 0,
-                "SC_ZEC"));
-        mValues.add(new PairInfo("ZEC", R.mipmap.coin_zec, "zeccny", 2.0, "SC", R.mipmap.coin_sc, "sccny", 0,
-                "ZEC_SC"));
-        mValues.add(new PairInfo("ZEC", R.mipmap.coin_zec, "zeccny", 2.0, "ETH", R.mipmap.coin_eth, "ethcny", 0,
+//        mValues.add(new PairInfo("SC", R.mipmap.coin_sc, "sc_cny", 40000, "ETH", R.mipmap.coin_eth, "eth_cny", 0,
+//                "SC_ETH"));
+//        mValues.add(new PairInfo("ETH", R.mipmap.coin_eth, "eth_cny", 2.5, "SC", R.mipmap.coin_sc, "sc_cny", 0,
+//                "ETH_SC"));
+//        mValues.add(new PairInfo("SC", R.mipmap.coin_sc, "sc_cny", 40000, "ZEC", R.mipmap.coin_zec, "zec_cny", 0,
+//                "SC_ZEC"));
+//        mValues.add(new PairInfo("ZEC", R.mipmap.coin_zec, "zec_cny", 2.0, "SC", R.mipmap.coin_sc, "sc_cny", 0,
+//                "ZEC_SC"));
+        mValues.add(new PairInfo("ZEC", R.mipmap.coin_zec, "tZECUSD", 2.0, "ETH", R.mipmap.coin_eth, "tETHUSD", 0,
                 "ZEC_ETH"));
-        mValues.add(new PairInfo("ETH", R.mipmap.coin_eth, "ethcny", 2.5, "ZEC", R.mipmap.coin_zec, "zeccny", 0,
+        mValues.add(new PairInfo("ETH", R.mipmap.coin_eth, "tETHUSD", 2.5, "ZEC", R.mipmap.coin_zec, "tZECUSD", 0,
                 "ETH_ZEC"));
-
-        mValues.add(new PairInfo("ETH", R.mipmap.coin_eth, "ethcny", 2.5, "DGD", R.mipmap.coin_dgd, "dgdcny", 0,
-                "ETH_DGD"));
-        mValues.add(new PairInfo("DGD", R.mipmap.coin_dgd, "dgdcny", 6.0, "ZEC", R.mipmap.coin_eth, "ethcny", 0,
-                "DGD_ETH"));
-        mValues.add(new PairInfo("SC", R.mipmap.coin_sc, "sccny", 100000, "DGD", R.mipmap.coin_dgd, "dgdcny", 0,
-                "SC_DGD"));
-        mValues.add(new PairInfo("DGD", R.mipmap.coin_dgd, "dgdcny", 6.0, "SC", R.mipmap.coin_sc, "sccny", 0,
-                "DGD_SC"));
-        mValues.add(new PairInfo("DGD", R.mipmap.coin_dgd, "dgdcny", 6.0, "ZEC", R.mipmap.coin_zec, "zeccny", 0,
-                "DGD_ZEC"));
-        mValues.add(new PairInfo("ZEC", R.mipmap.coin_zec, "zeccny", 2.0, "DGD", R.mipmap.coin_dgd, "dgdcny", 0,
-                "ZEC_DGD"));
-
 
     }
 
@@ -242,7 +229,7 @@ public class ListActivity extends AppCompatActivity {
         double net = total_earn_b - total_pay_a - 0.001 * (total_earn_b + total_pay_a);
         String netrate = df_net.format(net / total_pay_a);
 
-        String overview = String.format("买入A花费%f,卖出B得到%f,扣除佣金,获利：%f,比率：%S", total_pay_a, total_earn_b, net, netrate);
+        String overview = String.format("买入A花费$:%f,卖出B得到%f,扣除佣金,获利$：%f,比率：%S", total_pay_a, total_earn_b, net, netrate);
         a_b_overview.setText(overview);
 
 
@@ -286,19 +273,19 @@ public class ListActivity extends AppCompatActivity {
     private void getADepth_A(final PairInfo pair, final double amount_a, final double amount_b) {
         Network
                 .getYunbiAPIService()
-                .getDepth(pair.getYunbi_a(), LIMIT_SIZE)
+                .getDepth(pair.getYunbi_a() )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<JsonObject>() {
+                .subscribe(new BaseSubscriber<JsonArray>() {
                     @Override
-                    public void onNext(JsonObject jsonObject) {
-                        LogUtil.i(pair.getYunbi_a(), jsonObject.toString());
+                    public void onNext(JsonArray jsonArray) {
+                        LogUtil.i(pair.getYunbi_a(), jsonArray.toString());
 
                         double total_amount = 0;
                         double gap_amount = 0; // 深度缺口
                         double total_pay_a = 0;
 
-                        Depth depth = Depth.parseFromJson(jsonObject);
+                        Depth depth = Depth.parseFromJson(jsonArray);
                         pair.setDepthA(depth);
 
                         List<DepthOrder> asks = depth.getAsks();
@@ -332,19 +319,19 @@ public class ListActivity extends AppCompatActivity {
             total_pay_a) {
         Network
                 .getYunbiAPIService()
-                .getDepth(pair.getYunbi_b(), LIMIT_SIZE)
+                .getDepth(pair.getYunbi_b() )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<JsonObject>() {
+                .subscribe(new BaseSubscriber<JsonArray>() {
                     @Override
-                    public void onNext(JsonObject jsonObject) {
-                        LogUtil.i(pair.getYunbi_b(), jsonObject.toString());
+                    public void onNext(JsonArray jsonArray) {
+                        LogUtil.i(pair.getYunbi_b(), jsonArray.toString());
 
                         double total_amount = 0;
                         double gap_amount = 0; // 深度缺口
                         double total_earn_b = 0;
 
-                        Depth depth = Depth.parseFromJson(jsonObject);
+                        Depth depth = Depth.parseFromJson(jsonArray);
                         pair.setDepthB(depth);
 
 

@@ -1,5 +1,6 @@
 package com.afap.autoshift.net;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import retrofit2.http.Field;
@@ -8,24 +9,25 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
-public interface YunbiAPIService {
+public interface MAPIService {
 
 //https://yunbi.com/api/v2/order_book.json?market=sccny
 
-
+//?symbol=sc_cny&=20&=0.01
 
 
     /**
      * 获取指定市场的买卖深度
      *
-     * @param market     数字货币类型
-     * @param limit 深度
+     * @param cat 数字货币类型
      */
-    @GET("api/v2/depth.json")
-    Observable<JsonObject> getDepth(@Query("market") String market, @Query("limit") int limit );
+    @GET("book/{cat}/P0")
+    Observable<JsonArray> getDepth(@Path("cat") String cat);
+
 
     /**
      * 获取指定市场的订单

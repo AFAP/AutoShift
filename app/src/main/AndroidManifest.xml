@@ -13,7 +13,7 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".OverviewActivity"
+            android:name=".ListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
