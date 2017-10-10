@@ -37,10 +37,10 @@ public class Depth {
         Depth depth = new Depth();
         List<DepthOrder> asks = new ArrayList<>();
 
-        for (int i = 0; i < 25; i++) {
+        for (int i = 25; i < 50; i++) {
             JsonArray arr = array.get(i).getAsJsonArray();
             double price = arr.get(0).getAsDouble();
-            double amount = arr.get(2).getAsDouble();
+            double amount =  Math.abs(arr.get(2).getAsDouble());
 
             DepthOrder order = new DepthOrder(price, amount);
             asks.add(order);
@@ -48,7 +48,7 @@ public class Depth {
 
         List<DepthOrder> bids = new ArrayList<>();
 
-        for (int i = 25; i < 50; i++) {
+        for (int i = 0; i < 25; i++) {
             JsonArray arr = array.get(i).getAsJsonArray();
             double price = arr.get(0).getAsDouble();
             double amount = Math.abs(arr.get(2).getAsDouble()) ;
