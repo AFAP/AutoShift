@@ -2,23 +2,22 @@ package com.afap.autoshift.model;
 
 
 public class Coin {
-    private String id;
-    private String name;
-    private int resId;
+    private String alias; // 别名，所有平台中同一个币种，名字一样
+    private String name; // 各个平台中币的真实名字
+    private int resId; // 图标ID
 
-    public Coin(String id, String name, int resId) {
-        this.id = id;
+    public Coin(String alias, String name, int resId) {
+        this.alias = alias;
         this.name = name;
         this.resId = resId;
     }
 
-
-    public String getId() {
-        return id;
+    public String getAlias() {
+        return alias;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public String getName() {
@@ -35,14 +34,5 @@ public class Coin {
 
     public void setResId(int resId) {
         this.resId = resId;
-    }
-
-    @Override
-    public String toString() {
-        return "Coin{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", resId=" + resId +
-                '}';
     }
 }
