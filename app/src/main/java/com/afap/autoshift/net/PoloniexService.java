@@ -7,7 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
 
-public interface BittrexService   {
+public interface PoloniexService {
 
 
     /**
@@ -15,8 +15,7 @@ public interface BittrexService   {
      *
      * @param market 数字货币类型 BTC-SC
      */
-    //book/{cat}/P0
-    @GET("v1.1/public/getorderbook?type=both")
-    Observable<JsonObject> getDepth(@Query("market") String market);
+    @GET("public?command=returnOrderBook&depth=10")
+    Observable<JsonObject> getDepth(@Query("currencyPair") String market );
 
 }
