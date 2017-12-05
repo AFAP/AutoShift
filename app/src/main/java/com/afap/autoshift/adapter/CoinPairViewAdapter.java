@@ -11,10 +11,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.afap.autoshift.ListActivity.OnListInteractionListener;
 import com.afap.autoshift.R;
+import com.afap.autoshift.fragment.DepthFragment;
 import com.afap.autoshift.model.CoinPair;
-import com.afap.autoshift.model.PairInfo;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -23,14 +22,14 @@ public class CoinPairViewAdapter extends RecyclerView.Adapter<CoinPairViewAdapte
 
     private Context mContext;
     private final List<CoinPair> mValues;
-    private final OnListInteractionListener mListener;
+    private final DepthFragment.OnListInteractionListener mListener;
 
-    private DecimalFormat df_rate = new DecimalFormat("0.00000000");
-    private DecimalFormat df = new DecimalFormat("0.00000");
+    private DecimalFormat df = new DecimalFormat("0.00000000");
+    private DecimalFormat df_amount = new DecimalFormat("0.000");
     private DecimalFormat df_net = new DecimalFormat("0");
     private DecimalFormat df_netrate = new DecimalFormat("#.##%");
 
-    public CoinPairViewAdapter(List<CoinPair> items, OnListInteractionListener listener, Context context) {
+    public CoinPairViewAdapter(List<CoinPair> items, DepthFragment.OnListInteractionListener listener, Context context) {
         mValues = items;
         mListener = listener;
         mContext = context;
@@ -59,13 +58,13 @@ public class CoinPairViewAdapter extends RecyclerView.Adapter<CoinPairViewAdapte
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                double a = Double.parseDouble(s.toString());
-                holder.pairInfo.getCoin1().setAmount(a);
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                double a = Double.parseDouble(s.toString());
+                holder.pairInfo.getCoin1().setAmount(a);
             }
         });
 
@@ -75,25 +74,30 @@ public class CoinPairViewAdapter extends RecyclerView.Adapter<CoinPairViewAdapte
 
 
         if (pairInfo.getDepthB() != null) {
-            holder.et_amount_a.setText(df.format(pairInfo.getCoin1().getAmount()));
-            holder.et_amount_b.setText(df.format(pairInfo.getCoin2().getAmount()));
-            holder.rate_a_b.setText("rate:" + df_rate.format(pairInfo.getShiftInfo().getRate()) + ",max:" + pairInfo.getShiftInfo().getMaxLimit());
+            holder.et_amount_a.setText(df_amount.format(pairInfo.getCoin1().getAmount()));
+            holder.et_amount_b.setText(df_amount.format(pairInfo.getCoin2().getAmount()));
+            holder.info_a_platform.setText("(" + pairInfo.platform1 + ")");
+            holder.info_b_platform.setText("(" + pairInfo.platform2 + ")");
+
+
             holder.info_a_buy_cost.setText("AVG:" + df.format(pairInfo.getAvage_a())
                     + "\nCOST:" + df.format(pairInfo.getAvage_a() * pairInfo.getCoin1().getAmount()));
             holder.info_b_sell_earn.setText("AVG:" + df.format(pairInfo.getAvage_b())
                     + "\nEARN:" + df.format(pairInfo.getAvage_b() * pairInfo.getCoin2().getAmount()));
 
 
-            if (pairInfo.getCoin1().getAmount() > pairInfo.getShiftInfo().getMaxLimit()  ) {
+            if (  !pairInfo.isValidA() || !pairInfo.isValidB()) {
                 holder.tv_net.setBackgroundResource(R.drawable.bg_label_red);
                 holder.tv_net.setText("----");
-            } else if (pairInfo.getNetProfit() > 0) {
+            } else  if (pairInfo.getNetProfit() > 0) {
                 holder.tv_net.setBackgroundResource(R.drawable.bg_label_green);
-                holder.tv_net.setText("+" + df_netrate.format(pairInfo.getNetProfitRate()) + "\n" + df_net.format(pairInfo.getNetProfit()));
+                holder.tv_net.setText("+" + df_netrate.format(pairInfo.getNetProfitRate()) + "\n" + df_net.format
+                        (pairInfo.getNetProfit()));
 
             } else {
                 holder.tv_net.setBackgroundResource(R.drawable.bg_label_red);
-                holder.tv_net.setText(df_netrate.format(pairInfo.getNetProfitRate()) + "\n" + df_net.format(pairInfo.getNetProfit()));
+                holder.tv_net.setText(df_netrate.format(pairInfo.getNetProfitRate()) + "\n" + df_net.format(pairInfo
+                        .getNetProfit()));
             }
         }
 
@@ -101,7 +105,7 @@ public class CoinPairViewAdapter extends RecyclerView.Adapter<CoinPairViewAdapte
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                   // mListener.onListFragmentInteraction(pairInfo);
+                      mListener.onListFragmentInteraction(pairInfo);
                 }
             }
         });
@@ -117,21 +121,23 @@ public class CoinPairViewAdapter extends RecyclerView.Adapter<CoinPairViewAdapte
         private final View mView;
         private final EditText et_amount_a;
         private final EditText et_amount_b;
+        private final TextView info_a_platform;
+        private final TextView info_b_platform;
         private final TextView info_a_buy_cost;
         private final TextView info_b_sell_earn;
-        private final TextView rate_a_b;
         private final TextView tv_net;
 
 
         private ViewHolder(View view) {
             super(view);
             mView = view;
-            et_amount_a = (EditText) view.findViewById(R.id.amount_a);
-            et_amount_b = (EditText) view.findViewById(R.id.amount_b);
-            info_a_buy_cost = (TextView) view.findViewById(R.id.info_a_buy_cost);
-            info_b_sell_earn = (TextView) view.findViewById(R.id.info_b_sell_earn);
-            rate_a_b = (TextView) view.findViewById(R.id.rate_a_b);
-            tv_net = (TextView) view.findViewById(R.id.tv_net);
+            et_amount_a = view.findViewById(R.id.amount_a);
+            et_amount_b = view.findViewById(R.id.amount_b);
+            info_a_platform = view.findViewById(R.id.info_a_platform);
+            info_b_platform = view.findViewById(R.id.info_b_platform);
+            info_a_buy_cost = view.findViewById(R.id.info_a_buy_cost);
+            info_b_sell_earn = view.findViewById(R.id.info_b_sell_earn);
+            tv_net = view.findViewById(R.id.tv_net);
 
         }
     }

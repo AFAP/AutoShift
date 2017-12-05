@@ -5,7 +5,9 @@ import com.afap.autoshift.R;
 
 import org.json.JSONObject;
 
-public class Coin {
+import java.io.Serializable;
+
+public class Coin implements Serializable {
     private String alias; // 别名，所有平台中同一个币种，名字一样
     private String key; // 各个平台中币的真实名字
     private double amount; // 默认数量
@@ -77,4 +79,10 @@ public class Coin {
         }
         return resId;
     }
+
+    public Coin cloneSelf( ) {
+        return new Coin(this.getAlias(), this.getKey(), this.getAmount(), this.getResId());
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.afap.autoshift;
 
 import android.content.Context;
+import android.os.Environment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,8 @@ import org.json.JSONException;
 import org.json.JSONArray;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +47,15 @@ public class IndexActivity extends AppCompatActivity {
 
     private void initData() {
         mPlatforms = new ArrayList<>();
+        File cFile = new File(Environment.getExternalStorageDirectory(), "shift_config.js");
+        String jsonStr;
 
+        if (cFile.exists()) {
+            jsonStr = getStringFromFile(cFile);
+        } else {
+            jsonStr = getStringFromAssets(this, "config.js");
+        }
 
-        String jsonStr = getStringFromAssets(this, "config.js");
         try {
             JSONArray array = new JSONArray(jsonStr);
             for (int i = 0; i < array.length(); i++) {
@@ -129,6 +138,21 @@ public class IndexActivity extends AppCompatActivity {
     public String getStringFromAssets(Context context, String path) {
         try {
             InputStreamReader inputReader = new InputStreamReader(context.getResources().getAssets().open(path));
+            BufferedReader bufReader = new BufferedReader(inputReader);
+            String line;
+            String result = "";
+            while ((line = bufReader.readLine()) != null)
+                result += line;
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getStringFromFile(File file) {
+        try {
+            InputStreamReader inputReader = new FileReader(file)  ;
             BufferedReader bufReader = new BufferedReader(inputReader);
             String line;
             String result = "";

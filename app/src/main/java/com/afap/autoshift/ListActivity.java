@@ -157,7 +157,7 @@ public class ListActivity extends AppCompatActivity {
         double gap_amount_a = 0; // 深度缺口
         double total_pay_a = 0;
         Depth depthA = pairInfo.getDepthA();
-        List<DepthOrder> asks = depthA.getAsks();
+        List<DepthOrder> asks = depthA.getSells();
 
         StringBuffer sb_A = new StringBuffer();
         for (int i = 0; i < asks.size(); i++) {
@@ -194,7 +194,7 @@ public class ListActivity extends AppCompatActivity {
         double total_earn_b = 0;
 
         Depth depth = pairInfo.getDepthB();
-        List<DepthOrder> bids = depth.getBids();
+        List<DepthOrder> bids = depth.getBuys();
 
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < bids.size(); i++) {
@@ -288,7 +288,7 @@ public class ListActivity extends AppCompatActivity {
                         Depth depth = Depth.parseFromJson(jsonArray);
                         pair.setDepthA(depth);
 
-                        List<DepthOrder> asks = depth.getAsks();
+                        List<DepthOrder> asks = depth.getSells();
                         boolean flag = false;
                         for (int i = 0; i < asks.size(); i++) {
                             double price = asks.get(i).getPrice();
@@ -335,7 +335,7 @@ public class ListActivity extends AppCompatActivity {
                         pair.setDepthB(depth);
 
 
-                        List<DepthOrder> bids = depth.getBids();
+                        List<DepthOrder> bids = depth.getBuys();
 
                         boolean flag = false;
                         for (int i = 0; i < bids.size(); i++) {

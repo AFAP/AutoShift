@@ -8,7 +8,9 @@ public class CoinPair {
 
     private Coin coin1;
     private Coin coin2;
-
+    private Coin anchorCoin;
+    private boolean validA;
+    private boolean validB;
     public String platform1;
     public String platform2;
 
@@ -16,7 +18,6 @@ public class CoinPair {
     /**
      * 以下是动态获取
      */
-    private ShiftInfo shiftInfo;
     private Depth depthA;
     private Depth depthB;
     private double avage_a;
@@ -27,11 +28,34 @@ public class CoinPair {
     private double netProfitRate;
 
 
-    public CoinPair(Coin coin1,String p1, Coin coin2,String p2) {
+    public CoinPair(Coin coin1, String p1, Coin coin2, String p2,Coin anchorCoin) {
         this.coin1 = coin1;
         this.coin2 = coin2;
         this.platform1 = p1;
         this.platform2 = p2;
+        this.anchorCoin = anchorCoin;
+    }
+
+    public Coin getAnchorCoin() {
+        return anchorCoin;
+    }
+
+    public void setAnchorCoin(Coin anchorCoin) {
+        this.anchorCoin = anchorCoin;
+    }
+
+    public void setValidA(boolean validA) {
+        this.validA = validA;
+    }
+
+    public boolean isValidA() {
+        return validA;
+    }public boolean isValidB() {
+        return validB;
+    }
+
+    public void setValidB(boolean validB) {
+        this.validB = validB;
     }
 
     public Coin getCoin1() {
@@ -50,13 +74,6 @@ public class CoinPair {
         this.coin2 = coin2;
     }
 
-    public ShiftInfo getShiftInfo() {
-        return shiftInfo;
-    }
-
-    public void setShiftInfo(ShiftInfo shiftInfo) {
-        this.shiftInfo = shiftInfo;
-    }
 
     public Depth getDepthA() {
         return depthA;
