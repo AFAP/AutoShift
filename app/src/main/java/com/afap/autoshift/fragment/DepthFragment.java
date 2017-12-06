@@ -41,6 +41,7 @@ import java.util.List;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class DepthFragment extends Fragment {
@@ -164,6 +165,22 @@ public class DepthFragment extends Fragment {
             case Config.PLATFORM_POLONIEX:
                 observable = Network.getPoloniexService().getDepth(pair.getCoin1().getKey());
                 break;
+            case Config.PLATFORM_HITBTC:
+                observable = Network.getHitBtcService().getDepth(pair.getCoin1().getKey());
+                break;
+            case Config.PLATFORM_BITFINEX:
+                observable = Network
+                        .getBitfinexService()
+                        .getDepth(pair.getCoin1().getKey())
+                        .flatMap(new Func1<JsonArray, Observable<JsonObject>>() {
+                            @Override
+                            public Observable<JsonObject> call(JsonArray jsonElements) {
+                                JsonObject jsonObject = new JsonObject();
+                                jsonObject.add("result", jsonElements);
+                                return Observable.just(jsonObject);
+                            }
+                        });
+                break;
             default:
                 return;
         }
@@ -174,7 +191,6 @@ public class DepthFragment extends Fragment {
                 .subscribe(new BaseSubscriber<JsonObject>() {
                     @Override
                     public void onNext(JsonObject jsonObject) {
-                        LogUtil.i("---", jsonObject.toString());
 
                         double amount_a = pair.getCoin1().getAmount();
                         double total_amount = 0;
@@ -220,6 +236,22 @@ public class DepthFragment extends Fragment {
                 break;
             case Config.PLATFORM_POLONIEX:
                 observable = Network.getPoloniexService().getDepth(pair.getCoin2().getKey());
+                break;
+            case Config.PLATFORM_HITBTC:
+                observable = Network.getHitBtcService().getDepth(pair.getCoin2().getKey());
+                break;
+            case Config.PLATFORM_BITFINEX:
+                observable = Network
+                        .getBitfinexService()
+                        .getDepth(pair.getCoin2().getKey())
+                        .flatMap(new Func1<JsonArray, Observable<JsonObject>>() {
+                            @Override
+                            public Observable<JsonObject> call(JsonArray jsonElements) {
+                                JsonObject jsonObject = new JsonObject();
+                                jsonObject.add("result", jsonElements);
+                                return Observable.just(jsonObject);
+                            }
+                        });
                 break;
             default:
                 return;
@@ -393,7 +425,7 @@ public class DepthFragment extends Fragment {
         String netrate = df_net.format(net / total_pay_a);
 
         String overview = String.format("买入A花费:%f,卖出B得到%f,扣除佣金,获利：%S,比率：%S", total_pay_a,
-                total_earn_b,df.format(net)  + pairInfo.getAnchorCoin().getAlias(), netrate);
+                total_earn_b, df.format(net) + pairInfo.getAnchorCoin().getAlias(), netrate);
         a_b_overview.setText(overview);
 
 

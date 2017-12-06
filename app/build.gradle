@@ -7,8 +7,8 @@ android {
         applicationId "com.afap.autoshift"
         minSdkVersion 22
         targetSdkVersion 19
-        versionCode 2
-        versionName "1.0.3"
+        versionCode 4
+        versionName "1.0.4"
     }
     buildTypes {
         release {

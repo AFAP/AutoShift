@@ -50,5 +50,43 @@
             ]
 
         }
+    },
+    {
+        "name" : "HitBtc",
+        "anchorCoins" : [
+            {
+                "alias" : "BTC",
+                "key" : "BTC"
+            }
+        ],
+        "markets" : {
+            "BTC" : [
+                {
+                    "alias" : "SC",
+                    "key" : "SCBTC",
+                    "amount" : "50000"
+                }
+            ]
+
+        }
+    },
+    {
+        "name" : "Bitfinex",
+        "anchorCoins" : [
+            {
+                "alias" : "BTC",
+                "key" : "BTC"
+            }
+        ],
+        "markets" : {
+            "BTC" : [
+                {
+                    "alias" : "ZEC",
+                    "key" : "tZECBTC",
+                    "amount" : "2"
+                }
+            ]
+
+        }
     }
 ]

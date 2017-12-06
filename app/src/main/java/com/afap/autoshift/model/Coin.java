@@ -76,11 +76,17 @@ public class Coin implements Serializable {
             case "SC":
                 resId = R.mipmap.coin_sc;
                 break;
+            case "DGD":
+                resId = R.mipmap.coin_dgd;
+                break;
+            default:
+                resId = R.mipmap.coin;
+                break;
         }
         return resId;
     }
 
-    public Coin cloneSelf( ) {
+    public Coin cloneSelf() {
         return new Coin(this.getAlias(), this.getKey(), this.getAmount(), this.getResId());
     }
 

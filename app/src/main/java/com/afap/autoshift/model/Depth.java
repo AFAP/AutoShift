@@ -87,6 +87,12 @@ public class Depth {
             case Config.PLATFORM_POLONIEX:
                 parsePoloniex(jsonObject, buys, sells);
                 break;
+            case Config.PLATFORM_HITBTC:
+                parseHitbtc(jsonObject, buys, sells);
+                break;
+            case Config.PLATFORM_BITFINEX:
+                parseBitfinex(jsonObject, buys, sells);
+                break;
             default:
                 return null;
         }
@@ -155,6 +161,52 @@ public class Depth {
 
             DepthOrder order = new DepthOrder(price, amount);
             sells.add(order);
+        }
+    }
+
+    private static void parseHitbtc(JsonObject jsonObject, List<DepthOrder> buys, List<DepthOrder> sells) {
+        JsonArray buyArr = jsonObject.getAsJsonArray("bid");
+        int length = Math.min(buyArr.size(), Config.SIZE_DEPTH);
+
+        for (int i = 0; i < length; i++) {
+            JsonObject obj = buyArr.get(i).getAsJsonObject();
+            double price = obj.get("price").getAsDouble();
+            double amount = obj.get("size").getAsDouble();
+
+            DepthOrder order = new DepthOrder(price, amount);
+            buys.add(order);
+        }
+
+        JsonArray sellArr = jsonObject.getAsJsonArray("ask");
+        length = Math.min(sellArr.size(), Config.SIZE_DEPTH);
+        for (int i = 0; i < length; i++) {
+            JsonObject obj = sellArr.get(i).getAsJsonObject();
+            double price = obj.get("price").getAsDouble();
+            double amount = obj.get("size").getAsDouble();
+
+            DepthOrder order = new DepthOrder(price, amount);
+            sells.add(order);
+        }
+    }
+
+    private static void parseBitfinex(JsonObject jsonObject, List<DepthOrder> buys, List<DepthOrder> sells) {
+        JsonArray array = jsonObject.getAsJsonArray("result");
+        for (int i = 25; i < 50; i++) {
+            JsonArray arr = array.get(i).getAsJsonArray();
+            double price = arr.get(0).getAsDouble();
+            double amount = Math.abs(arr.get(2).getAsDouble());
+
+            DepthOrder order = new DepthOrder(price, amount);
+            sells.add(order);
+        }
+
+        for (int i = 0; i < 25; i++) {
+            JsonArray arr = array.get(i).getAsJsonArray();
+            double price = arr.get(0).getAsDouble();
+            double amount = Math.abs(arr.get(2).getAsDouble());
+
+            DepthOrder order = new DepthOrder(price, amount);
+            buys.add(order);
         }
     }
 

@@ -76,8 +76,8 @@ public class CoinPairViewAdapter extends RecyclerView.Adapter<CoinPairViewAdapte
         if (pairInfo.getDepthB() != null) {
             holder.et_amount_a.setText(df_amount.format(pairInfo.getCoin1().getAmount()));
             holder.et_amount_b.setText(df_amount.format(pairInfo.getCoin2().getAmount()));
-            holder.info_a_platform.setText("(" + pairInfo.platform1 + ")");
-            holder.info_b_platform.setText("(" + pairInfo.platform2 + ")");
+            holder.info_a_platform.setText("(" + pairInfo.getCoin1().getAlias() + "-" + pairInfo.platform1 + ")");
+            holder.info_b_platform.setText("(" + pairInfo.getCoin2().getAlias() + "-" + pairInfo.platform2 + ")");
 
 
             holder.info_a_buy_cost.setText("AVG:" + df.format(pairInfo.getAvage_a())
@@ -86,18 +86,17 @@ public class CoinPairViewAdapter extends RecyclerView.Adapter<CoinPairViewAdapte
                     + "\nEARN:" + df.format(pairInfo.getAvage_b() * pairInfo.getCoin2().getAmount()));
 
 
-            if (  !pairInfo.isValidA() || !pairInfo.isValidB()) {
+            if (!pairInfo.isValidA() || !pairInfo.isValidB()) {
                 holder.tv_net.setBackgroundResource(R.drawable.bg_label_red);
                 holder.tv_net.setText("----");
-            } else  if (pairInfo.getNetProfit() > 0) {
+            } else if (pairInfo.getNetProfit() > 0) {
                 holder.tv_net.setBackgroundResource(R.drawable.bg_label_green);
                 holder.tv_net.setText("+" + df_netrate.format(pairInfo.getNetProfitRate()) + "\n" + df_net.format
                         (pairInfo.getNetProfit()));
 
             } else {
                 holder.tv_net.setBackgroundResource(R.drawable.bg_label_red);
-                holder.tv_net.setText(df_netrate.format(pairInfo.getNetProfitRate()) + "\n" + df_net.format(pairInfo
-                        .getNetProfit()));
+                holder.tv_net.setText(df_netrate.format(pairInfo.getNetProfitRate()));
             }
         }
 
@@ -105,7 +104,7 @@ public class CoinPairViewAdapter extends RecyclerView.Adapter<CoinPairViewAdapte
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                      mListener.onListFragmentInteraction(pairInfo);
+                    mListener.onListFragmentInteraction(pairInfo);
                 }
             }
         });

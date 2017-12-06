@@ -9,6 +9,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Network {
     private static BittrexService mBittrexService;
     private static PoloniexService mPoloniexService;
+    private static HitBtcService mHitBtcService;
+    private static BitfinexService mBitfinexService;
+
+
+
 
 
     private static MAPIService yunbiApis;
@@ -100,5 +105,50 @@ public class Network {
         }
         return mPoloniexService;
     }
+
+    public static HitBtcService getHitBtcService() {
+        if (mHitBtcService == null) {
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            // OkHttp3.0的使用方式
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .retryOnConnectionFailure(true)
+                    .addInterceptor(loggingInterceptor) // TODO 最后关闭日志
+                    .build();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.hitbtc.com/api/2/public/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .client(okHttpClient)
+                    .build();
+            mHitBtcService = retrofit.create(HitBtcService.class);
+        }
+        return mHitBtcService;
+    }
+
+    public static BitfinexService getBitfinexService() {
+        if (mBitfinexService == null) {
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            // OkHttp3.0的使用方式
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .retryOnConnectionFailure(true)
+                    .addInterceptor(loggingInterceptor) // TODO 最后关闭日志
+                    .build();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.bitfinex.com/v2/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .client(okHttpClient)
+                    .build();
+            mBitfinexService = retrofit.create(BitfinexService.class);
+        }
+        return mBitfinexService;
+    }
+
 
 }

@@ -104,6 +104,7 @@ public class IndexActivity extends AppCompatActivity {
         }
         mPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(), titles, mFragments);
         mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.setOffscreenPageLimit(20);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
