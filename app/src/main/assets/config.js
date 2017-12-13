@@ -120,5 +120,24 @@
             ]
 
         }
+    },
+    {
+     "name" : "Huobi",
+     "anchorCoins" : [
+         {
+             "alias" : "USDT",
+             "key" : "USDT"
+         }
+     ],
+     "markets" : {
+         "USDT" : [
+             {
+                 "alias" : "ZEC",
+                 "key" : "zecusdt",
+                 "amount" : "2"
+             }
+         ]
+
+     }
     }
 ]

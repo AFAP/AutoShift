@@ -181,6 +181,9 @@ public class DepthFragment extends Fragment {
                             }
                         });
                 break;
+            case Config.PLATFORM_HUOBI:
+                observable = Network.getHuobiService().getDepth(pair.getCoin1().getKey());
+                break;
             default:
                 return;
         }
@@ -252,6 +255,9 @@ public class DepthFragment extends Fragment {
                                 return Observable.just(jsonObject);
                             }
                         });
+                break;
+            case Config.PLATFORM_HUOBI:
+                observable = Network.getHuobiService().getDepth(pair.getCoin2().getKey());
                 break;
             default:
                 return;

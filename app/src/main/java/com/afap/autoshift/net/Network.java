@@ -11,6 +11,7 @@ public class Network {
     private static PoloniexService mPoloniexService;
     private static HitBtcService mHitBtcService;
     private static BitfinexService mBitfinexService;
+    private static HuobiService mHuobiService;
 
 
 
@@ -150,5 +151,25 @@ public class Network {
         return mBitfinexService;
     }
 
+    public static HuobiService getHuobiService() {
+        if (mHuobiService == null) {
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
+            // OkHttp3.0的使用方式
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .retryOnConnectionFailure(true)
+                    .addInterceptor(loggingInterceptor) // TODO 最后关闭日志
+                    .build();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.huobi.pro")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .client(okHttpClient)
+                    .build();
+            mHuobiService = retrofit.create(HuobiService.class);
+        }
+        return mHuobiService;
+    }
 }

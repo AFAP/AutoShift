@@ -93,6 +93,9 @@ public class Depth {
             case Config.PLATFORM_BITFINEX:
                 parseBitfinex(jsonObject, buys, sells);
                 break;
+            case Config.PLATFORM_HUOBI:
+                parseHuobi(jsonObject, buys, sells);
+                break;
             default:
                 return null;
         }
@@ -209,5 +212,32 @@ public class Depth {
             buys.add(order);
         }
     }
+
+    private static void parseHuobi(JsonObject jsonObject, List<DepthOrder> buys, List<DepthOrder> sells) {
+        JsonObject   tickObj = jsonObject.getAsJsonObject("tick");
+
+        JsonArray buyArr = tickObj.getAsJsonArray("bids");
+        for (int i = 0; i < buyArr.size(); i++) {
+            JsonArray obj = buyArr.get(i).getAsJsonArray();
+            double price = obj.get(0).getAsDouble();
+            double amount = obj.get(1).getAsDouble();
+
+            DepthOrder order = new DepthOrder(price, amount);
+            buys.add(order);
+        }
+
+
+        JsonArray sellArr = tickObj.getAsJsonArray("asks");
+        for (int i = 0; i < sellArr.size(); i++) {
+            JsonArray obj = sellArr.get(i).getAsJsonArray();
+            double price = obj.get(0).getAsDouble();
+            double amount = obj.get(1).getAsDouble();
+
+            DepthOrder order = new DepthOrder(price, amount);
+            sells.add(order);
+        }
+    }
+
+
 
 }
