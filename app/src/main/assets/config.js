@@ -5,6 +5,10 @@
             {
                 "alias" : "BTC",
                 "key" : "BTC"
+            },
+            {
+                "alias" : "USDT",
+                "key" : "USDT"
             }
         ],
         "markets" : {
@@ -19,6 +23,18 @@
                     "key" : "BTC-ZEC",
                     "amount" : "2"
                 }
+            ],
+            "USDT" : [
+                {
+                    "alias" : "BTC",
+                    "key" : "USDT-BTC",
+                    "amount" : "0.05"
+                },
+                {
+                    "alias" : "ZEC",
+                    "key" : "USDT-ZEC",
+                    "amount" : "2"
+                }
             ]
         }
     },
@@ -28,6 +44,10 @@
             {
                 "alias" : "BTC",
                 "key" : "BTC"
+            },
+            {
+                "alias" : "USDT",
+                "key" : "USDT"
             }
         ],
         "markets" : {
@@ -47,6 +67,18 @@
                     "key" : "BTC_ETH",
                     "amount" : "2"
                 }
+            ],
+            "USDT" : [
+             {
+                 "alias" : "BTC",
+                 "key" : "USDT_BTC",
+                 "amount" : "0.05"
+             },
+             {
+                 "alias" : "ZEC",
+                 "key" : "USDT_ZEC",
+                 "amount" : "2"
+             }
             ]
 
         }
