@@ -21,7 +21,7 @@
                 {
                     "alias" : "ZEC",
                     "key" : "BTC-ZEC",
-                    "amount" : "2"
+                    "amount" : "1"
                 }
             ],
             "USDT" : [
@@ -33,7 +33,12 @@
                 {
                     "alias" : "ZEC",
                     "key" : "USDT-ZEC",
-                    "amount" : "2"
+                    "amount" : "1"
+                },
+                {
+                 "alias" : "ETC",
+                 "key" : "USDT-ETC",
+                 "amount" : "10"
                 }
             ]
         }
@@ -60,12 +65,12 @@
                 {
                     "alias" : "ZEC",
                     "key" : "BTC_ZEC",
-                    "amount" : "2"
+                    "amount" : "1"
                 },
                 {
                     "alias" : "ETH",
                     "key" : "BTC_ETH",
-                    "amount" : "2"
+                    "amount" : "1"
                 }
             ],
             "USDT" : [
@@ -77,7 +82,7 @@
              {
                  "alias" : "ZEC",
                  "key" : "USDT_ZEC",
-                 "amount" : "2"
+                 "amount" : "1"
              }
             ]
 
@@ -99,23 +104,27 @@
                     "amount" : "50000"
                 }
             ]
-
         }
     },
     {
-        "name" : "Bitfinex",
+        "name" : "Gate",
         "anchorCoins" : [
             {
-                "alias" : "BTC",
-                "key" : "BTC"
+                "alias" : "USDT",
+                "key" : "USDT"
             }
         ],
         "markets" : {
-            "BTC" : [
+            "USDT" : [
                 {
                     "alias" : "ZEC",
-                    "key" : "tZECBTC",
-                    "amount" : "2"
+                    "key" : "zec_usdt",
+                    "amount" : "1"
+                },
+                {
+                    "alias" : "ETC",
+                    "key" : "etc_usdt",
+                    "amount" : "10"
                 }
             ]
 
@@ -134,7 +143,7 @@
              {
                  "alias" : "ZEC",
                  "key" : "zecusdt",
-                 "amount" : "2"
+                 "amount" : "1"
              }
          ]
 

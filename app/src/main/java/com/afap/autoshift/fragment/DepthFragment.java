@@ -184,6 +184,9 @@ public class DepthFragment extends Fragment {
             case Config.PLATFORM_HUOBI:
                 observable = Network.getHuobiService().getDepth(pair.getCoin1().getKey());
                 break;
+            case Config.PLATFORM_GATE:
+                observable = Network.getGateService().getDepth(pair.getCoin1().getKey());
+                break;
             default:
                 return;
         }
@@ -258,6 +261,9 @@ public class DepthFragment extends Fragment {
                 break;
             case Config.PLATFORM_HUOBI:
                 observable = Network.getHuobiService().getDepth(pair.getCoin2().getKey());
+                break;
+            case Config.PLATFORM_GATE:
+                observable = Network.getGateService().getDepth(pair.getCoin2().getKey());
                 break;
             default:
                 return;
