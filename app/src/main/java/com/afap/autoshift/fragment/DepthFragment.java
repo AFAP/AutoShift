@@ -367,7 +367,9 @@ public class DepthFragment extends Fragment {
         List<DepthOrder> asks = depthA.getSells();
 
         StringBuffer sb_A = new StringBuffer();
-        for (int i = 0; i < asks.size(); i++) {
+        int lb = Math.min(asks.size(), Config.SIZE_DEPTH);
+
+        for (int i = 0; i < lb; i++) {
             double price = asks.get(i).getPrice();
             double amount = asks.get(i).getAmount();
             boolean flag = false;
@@ -404,7 +406,8 @@ public class DepthFragment extends Fragment {
         List<DepthOrder> bids = depth.getBuys();
 
         StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < bids.size(); i++) {
+        int ls = Math.min(bids.size(), Config.SIZE_DEPTH);
+        for (int i = 0; i < ls; i++) {
             double price = bids.get(i).getPrice();
             double amount = bids.get(i).getAmount();
             boolean flag = false;

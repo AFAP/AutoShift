@@ -244,8 +244,7 @@ public class Depth {
     private static void parseGate(JsonObject jsonObject, List<DepthOrder> buys, List<DepthOrder> sells) {
 
         JsonArray buyArr = jsonObject.getAsJsonArray("bids");
-        int length = Math.min(buyArr.size(), Config.SIZE_DEPTH);
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < buyArr.size(); i++) {
             JsonArray obj = buyArr.get(i).getAsJsonArray();
             double price = obj.get(0).getAsDouble();
             double amount = obj.get(1).getAsDouble();
@@ -256,8 +255,7 @@ public class Depth {
 
 
         JsonArray sellArr = jsonObject.getAsJsonArray("asks");
-        length = Math.min(sellArr.size(), Config.SIZE_DEPTH);
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < sellArr.size(); i++) {
             JsonArray obj = sellArr.get(i).getAsJsonArray();
             double price = obj.get(0).getAsDouble();
             double amount = obj.get(1).getAsDouble();
