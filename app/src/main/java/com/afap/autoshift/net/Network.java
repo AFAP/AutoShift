@@ -13,6 +13,7 @@ public class Network {
     private static BitfinexService mBitfinexService;
     private static HuobiService mHuobiService;
     private static GateService mGateService;
+    private static BinanceService mBinanceService;
 
 
 
@@ -196,6 +197,27 @@ public class Network {
         return mGateService;
     }
 
+    public static BinanceService getBinanceService() {
+        if (mBinanceService == null) {
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            // OkHttp3.0的使用方式
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .retryOnConnectionFailure(true)
+                    .addInterceptor(loggingInterceptor) // TODO 最后关闭日志
+                    .build();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.binance.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .client(okHttpClient)
+                    .build();
+            mBinanceService = retrofit.create(BinanceService.class);
+        }
+        return mBinanceService;
+    }
 
 
 }

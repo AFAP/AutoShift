@@ -22,6 +22,11 @@
                     "alias" : "ZEC",
                     "key" : "BTC-ZEC",
                     "amount" : "1"
+                },
+                {
+                    "alias" : "NEO",
+                    "key" : "BTC-NEO",
+                    "amount" : "100"
                 }
             ],
             "USDT" : [
@@ -110,11 +115,27 @@
         "name" : "Gate",
         "anchorCoins" : [
             {
+                "alias" : "BTC",
+                "key" : "BTC"
+            },
+            {
                 "alias" : "USDT",
                 "key" : "USDT"
             }
         ],
         "markets" : {
+            "BTC" : [
+                {
+                    "alias" : "EOS",
+                    "key" : "eos_btc",
+                    "amount" : "100"
+                },
+                {
+                    "alias" : "NEO",
+                    "key" : "neo_btc",
+                    "amount" : "100"
+                }
+            ],
             "USDT" : [
                 {
                     "alias" : "ZEC",
@@ -127,26 +148,61 @@
                     "amount" : "10"
                 }
             ]
-
         }
     },
     {
      "name" : "Huobi",
      "anchorCoins" : [
          {
+             "alias" : "BTC",
+             "key" : "BTC"
+         },
+         {
              "alias" : "USDT",
              "key" : "USDT"
          }
+
+
      ],
      "markets" : {
-         "USDT" : [
-             {
-                 "alias" : "ZEC",
-                 "key" : "zecusdt",
-                 "amount" : "1"
-             }
-         ]
-
-     }
+         "BTC" : [
+                {
+                    "alias" : "EOS",
+                    "key" : "eosbtc",
+                    "amount" : "100"
+                }
+            ],
+            "USDT" : [
+                {
+                    "alias" : "ZEC",
+                    "key" : "zecusdt",
+                    "amount" : "1"
+                }
+            ]
+        }
+    }
+,
+    {
+     "name" : "Binance",
+     "anchorCoins" : [
+         {
+             "alias" : "BTC",
+             "key" : "BTC"
+         }
+     ],
+     "markets" : {
+         "BTC" : [
+                {
+                    "alias" : "EOS",
+                    "key" : "EOSBTC",
+                    "amount" : "100"
+                },
+                {
+                    "alias" : "NEO",
+                    "key" : "NEOBTC",
+                    "amount" : "100"
+                }
+            ]
+        }
     }
 ]

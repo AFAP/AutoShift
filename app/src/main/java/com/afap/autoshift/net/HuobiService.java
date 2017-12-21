@@ -16,10 +16,8 @@ public interface HuobiService {
     // https://api.huobi.pro/market/depth?symbol=zecusdt&type=step0
     @Headers({
             "User-Agent: Mozilla/5.0 (Linux; Android 7.0; ZUK Z2131 Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/55.0.2883.91 Mobile Safari/537.36",
-            "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
             "Content-Type: application/json",
             "Accept-Language: zh-CN"
-
     })
     @GET("/market/depth?type=step0")
     Observable<JsonObject> getDepth(@Query("symbol") String symbol);

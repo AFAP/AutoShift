@@ -79,6 +79,13 @@ public class Coin implements Serializable {
             case "DGD":
                 resId = R.mipmap.coin_dgd;
                 break;
+            case "EOS":
+                resId = R.mipmap.coin_eos;
+                break;
+            case "ETC":
+                resId = R.mipmap.coin_etc;
+                break;
+
             default:
                 resId = R.mipmap.coin;
                 break;
